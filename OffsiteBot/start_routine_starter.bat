@@ -1,0 +1,2 @@
+python routine_starter.py
+pause
