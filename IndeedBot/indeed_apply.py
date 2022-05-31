@@ -99,9 +99,11 @@ def resolve_input(driver, item, response):
     if BUTTON_GROUP is not None:
         BUTTON_GROUP = BUTTON_GROUP[::-1]
     INPUT_TYPE = derived[2]
-    print("resolve_input function given:", response)
+
     try:
         question_text = item.find_element(By.XPATH, ".//label[starts-with(@for, 'input-q')]").text
+
+        print(question_text, "resovle_input given RESPONSE:", response)
 
         if INPUT_TYPE == "RADIO":
             clicked_a_button = False
@@ -197,23 +199,33 @@ def resolve_input(driver, item, response):
                 FOCUS_ELEMENT.send_keys(DEFAULT_INPUT)
 
         elif INPUT_TYPE == "DROPDOWN":
-            select = Select(FOCUS_ELEMENT)
+            options = BUTTON_GROUP
             try:
                 if response is not None:
-                    visible_text = None
-                    options = select.options
+                    made_selection = False
+
+                    # attempt to find exact match
                     for op in options:
                         print(response, op.text)
-                        if response.lower() in op.text.lower():
-                            visible_text = op.text
+                        if response.lower() == op.text.lower():
+                            print("clicking:", op.text.lower())
+                            op.click()
+                            made_selection = True
+                            break
 
-                    if visible_text is None:
-                        select.select_by_index(0)
-                    else:
-                        select.select_by_visible_text(visible_text)
+                    if not made_selection:
+                        for op in options:
+                            print(response, op.text)
+                            if response.lower() in op.text.lower():
+                                print("clicking:", op.text.lower())
+                                op.click()
+                                made_selection = True
+                                break
 
+                    if not made_selection:
+                        options[0].click()
                 else:
-                    select.select_by_index(0)
+                    options[0].click()
             except Exception as e:
                 print(e, "error at trying to select in dropdown")
 
