@@ -12,13 +12,13 @@ from selenium.webdriver.common.action_chains import ActionChains
 
 def date_spin_button_until_match(ele, match_str):
     ele.send_keys(Keys.BACKSPACE)
-    sleep(.2 + random()/3.0)
+    sleep(.2 + random() / 3.0)
     if len(match_str) == 4:
         start_num = int(match_str)
     else:
         start_num = 1
     ele.send_keys(Keys.UP)
-    sleep(.2 + random()/3.0)
+    sleep(.2 + random() / 3.0)
 
     diff = abs(int(match_str) - start_num)
 
@@ -33,6 +33,7 @@ def date_spin_button_until_match(ele, match_str):
 
 
 def slow_type(element, text, delay=0.05):
+    text = str(text)  # to ensure that default input such as int or float is iterable
     for character in text:
         element.send_keys(character)
         sleep(delay + (random() / 3.0))
