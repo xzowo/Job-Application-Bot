@@ -17,9 +17,9 @@ from selenium.webdriver.support import expected_conditions as EC
 def crawl_pg_and_do_work():
 
     try:
-        wait.until(EC.visibility_of_element_located((By.XPATH, "//div[@class='slider_item']")))
+        wait.until(EC.visibility_of_element_located((By.XPATH, "//div[contains(@class,'slider_item')]")))
         sleep(4 + random())
-        prof_eles = driver.find_elements(By.XPATH, "//div[@class='slider_item']")
+        prof_eles = driver.find_elements(By.XPATH, "//div[contains(@class,'slider_item')]")
         print(prof_eles, "\n")
 
         for ele in prof_eles:
