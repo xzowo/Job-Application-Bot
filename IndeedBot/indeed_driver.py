@@ -140,7 +140,7 @@ if not DEBUG_MODE:
                 break
             sleep(4 + random())
             try:
-                next_pg = driver.find_element(By.XPATH, "//a[@aria-label='Next']")
+                next_pg = driver.find_element(By.XPATH, "//a[contains(@aria-label,'Next')]")
                 driver.execute_script("arguments[0].click();", next_pg)
                 print("\n\n")
                 sleep(10 + random())
