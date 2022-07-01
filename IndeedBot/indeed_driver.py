@@ -26,7 +26,7 @@ def crawl_pg_and_do_work():
 
             sleep(1 + random())
             try:
-                ainfo = ele.find_element(By.XPATH, ".//a[@class='jcs-JobTitle']")
+                ainfo = ele.find_element(By.XPATH, ".//a[contains(@class,'jcs-JobTitle')]")
             except:
                 print("ERROR: ainfo")
                 continue
