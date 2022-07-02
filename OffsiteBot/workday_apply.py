@@ -10,28 +10,6 @@ from process_label_text import process_label_text
 from selenium.webdriver.common.action_chains import ActionChains
 
 
-def date_spin_button_until_match(ele, match_str):
-    ele.send_keys(Keys.BACKSPACE)
-    sleep(.2 + random() / 3.0)
-    if len(match_str) == 4:
-        start_num = int(match_str)
-    else:
-        start_num = 1
-    ele.send_keys(Keys.UP)
-    sleep(.2 + random() / 3.0)
-
-    diff = abs(int(match_str) - start_num)
-
-    if start_num < int(match_str):
-        for i in range(diff):
-            ele.send_keys(Keys.UP)
-            sleep(.1)
-    elif start_num > int(match_str):
-        for i in range(diff):
-            ele.send_keys(Keys.DOWN)
-            sleep(.1)
-
-
 def slow_type(element, text, delay=0.05):
     text = str(text)  # to ensure that default input such as int or float is iterable
     for character in text:
@@ -407,17 +385,17 @@ def resolve_input(driver, item, response):
             mm_ele = FOCUS_ELEMENT.find_element(By.XPATH, ".//input[@aria-label='Month']")
             driver.execute_script("arguments[0].click();", mm_ele)
             sleep(1)
-            date_spin_button_until_match(mm_ele, DEFAULT_DATE.strftime("%m"))
+            mm_ele.send_keys(DEFAULT_DATE.strftime("%m"))
             sleep(1)
             dd_ele = FOCUS_ELEMENT.find_element(By.XPATH, ".//input[@aria-label='Day']")
             driver.execute_script("arguments[0].click();", dd_ele)
             sleep(1)
-            date_spin_button_until_match(dd_ele, DEFAULT_DATE.strftime("%d"))
+            dd_ele.send_keys(DEFAULT_DATE.strftime("%d"))
             sleep(1)
             yyyy_ele = FOCUS_ELEMENT.find_element(By.XPATH, ".//input[@aria-label='Year']")
             driver.execute_script("arguments[0].click();", yyyy_ele)
             sleep(1)
-            date_spin_button_until_match(yyyy_ele, DEFAULT_DATE.strftime("%Y"))
+            yyyy_ele.send_keys(DEFAULT_DATE.strftime("%Y"))
             sleep(1)
 
         else:
