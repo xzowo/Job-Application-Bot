@@ -25,7 +25,7 @@ for link in valid_links_list:
     # run the python file associated with the detection
     routine_fname = links_fname_assoc_dict[key]
     try:
-        p1 = subprocess.run(["python", routine_fname, link], timeout=300)
+        p1 = subprocess.run(["python", routine_fname, link], timeout=500)
         print(p1)
 
         if p1.returncode == 0:
