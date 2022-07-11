@@ -536,7 +536,7 @@ def apply(driver):
     try:
         try:
             apply_button = driver.find_element(By.XPATH, "//a[@data-automation-id='adventureButton']")
-            apply_button.click()
+            driver.execute_script("arguments[0].click();", apply_button)
             sleep(4 + random())
         except Exception as e:
             print(e, "apply button")
@@ -581,11 +581,14 @@ def apply(driver):
                 sleep(4 + random())
                 continue_button = driver.find_element(By.XPATH,
                                                       "//button[@data-automation-id='bottom-navigation-next-button']")
-                continue_button.click()
 
                 if "submit" in continue_button.text.lower():
                     applied = True
                     flipping_pages = False
+                    
+                continue_button.click()
+                sleep(4 + random())
+                    
             except:
                 print("Couldn't find continue button")
                 # need to check if it is submitted
