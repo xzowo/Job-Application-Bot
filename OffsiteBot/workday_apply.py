@@ -540,7 +540,7 @@ def apply(driver):
             print("Page does not exist")
             return applied
         else:
-            print("page seems valid")
+            print("page seems valid, but has error message")
     except Exception as e:
         print("page seems valid")
 
