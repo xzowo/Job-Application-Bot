@@ -534,6 +534,17 @@ def apply(driver):
     APPLY_TIMEOUT = 600
 
     try:
+        err_msg = driver.find_element(By.XPATH, "//span[@data-automation-id='errorMessage']")
+        if err_msg.text.lower() == "the page you are looking for does not exist":
+            applied = True
+            print("Page does not exist")
+            return applied
+        else:
+            print("page seems valid")
+    except Exception as e:
+        print("page seems valid")
+
+    try:
         try:
             apply_button = driver.find_element(By.XPATH, "//a[@data-automation-id='adventureButton']")
             driver.execute_script("arguments[0].click();", apply_button)
