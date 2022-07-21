@@ -41,7 +41,7 @@ def derive_input_type(item):
                         focus_element = item.find_element(By.XPATH, ".//input[starts-with(@id, 'input-')]")
                         if focus_element.get_attribute('type') == "date":
                             THE_TYPE = "DATE"
-                        elif focus_element.get_attribute('type') == "text" or focus_element.get_attribute('type') == "number"::
+                        elif focus_element.get_attribute('type') == "text" or focus_element.get_attribute('type') == "number" or focus_element.get_attribute('type') == "tel":
                             THE_TYPE = "TEXT"
                         else:
                             raise Exception("error finding text, number, or date")
