@@ -7,6 +7,7 @@ from keyword_config import get_response
 from process_label_text import process_label_text
 from driver_config import APPLY_TIMEOUT, INCLUDE_OPTIONAL_ANSWERS
 
+QUESTION_TEXT_XPATH_STR = ".//span[starts-with(@class, 'fs-unmask')]"
 
 def derive_input_type(item):
     THE_TYPE = ""
@@ -41,7 +42,7 @@ def derive_input_type(item):
                         focus_element = item.find_element(By.XPATH, ".//input[starts-with(@id, 'input-')]")
                         if focus_element.get_attribute('type') == "date":
                             THE_TYPE = "DATE"
-                        elif focus_element.get_attribute('type') == "text" or focus_element.get_attribute('type') == "number" or focus_element.get_attribute('type') == "tel": 
+                        elif focus_element.get_attribute('type') == "text" or focus_element.get_attribute('type') == "number" or focus_element.get_attribute('type') == "tel":
                             THE_TYPE = "TEXT"
                         else:
                             raise Exception("error finding text, number, or date")
@@ -93,6 +94,7 @@ def get_input_field_values(FOCUS_ELEMENT, BUTTON_GROUP, INPUT_TYPE):
 
 
 def resolve_input(driver, item, response):
+    global QUESTION_TEXT_XPATH_STR
     DEFAULT_INPUT = 1
     DEFAULT_DATE = date.today() + timedelta(14)
     derived = derive_input_type(item)
@@ -103,7 +105,7 @@ def resolve_input(driver, item, response):
     INPUT_TYPE = derived[2]
 
     try:
-        question_text = item.find_element(By.XPATH, ".//span[starts-with(@class, 'fs-unmask')]").text
+        question_text = item.find_element(By.XPATH, QUESTION_TEXT_XPATH_STR).text
 
         print("question_text:", question_text, "resovle_input given RESPONSE:", response)
 
@@ -243,9 +245,10 @@ def resolve_input(driver, item, response):
 
 
 def solve_items(driver, the_items):
+    global QUESTION_TEXT_XPATH_STR
     for item in the_items:
         sleep(2 + random())
-        question_text = item.find_element(By.XPATH, ".//label[starts-with(@for, 'input-q')]").text
+        question_text = item.find_element(By.XPATH, QUESTION_TEXT_XPATH_STR).text
         processed_text = process_label_text(question_text)
 
         if "(optional)" in processed_text and not INCLUDE_OPTIONAL_ANSWERS:
