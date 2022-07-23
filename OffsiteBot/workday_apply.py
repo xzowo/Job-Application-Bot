@@ -232,11 +232,6 @@ def resolve_input(driver, item, response):
                         driver.execute_script("arguments[0].click();", button)
                         clicked_a_button = True
                         break
-                    else:
-                        if "disability" in process_label_text(question_text).lower() and "Yes" in answer_text:
-                            continue
-                        if "veteran" in process_label_text(question_text).lower() and "Yes" in answer_text:
-                            continue
 
                         processed_text = process_label_text(answer_text)
                         processed_text_list = processed_text.lower().split()
@@ -253,13 +248,6 @@ def resolve_input(driver, item, response):
                     # button does not contain text, but only the id
                     button_id_text = button.get_attribute('id')
                     answer_text = FOCUS_ELEMENT.find_element(By.XPATH, ".//label[@for='" + button_id_text + "']").text
-
-                    if "Do you have experience in " in question_text and "Yes" in answer_text:
-                        driver.execute_script("arguments[0].click();", button)
-                        clicked_a_button = True
-                    elif " degree?" in question_text and "Yes" in answer_text:
-                        driver.execute_script("arguments[0].click();", button)
-                        clicked_a_button = True
 
                 if not clicked_a_button:
                     driver.execute_script("arguments[0].click();", BUTTON_GROUP[0])
