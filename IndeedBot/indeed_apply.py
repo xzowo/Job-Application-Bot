@@ -129,7 +129,7 @@ def resolve_input(driver, item, response):
                     # button does not contain text, but only the id
                     button_id_text = button.get_attribute('id')
                     answer_text = FOCUS_ELEMENT.find_element(By.XPATH, ".//label[@for='" + button_id_text + "']").text
-                    print(button_id_text, answer_text)
+                    print("ANSWER ITEM:", button_id_text, "ANSWER TEXT:", answer_text)
                     print("RESPONSE:", response)
 
                     if response is not None and response in answer_text:
@@ -163,7 +163,7 @@ def resolve_input(driver, item, response):
                 # button does not contain text, but only the id
                 button_id_text = button.get_attribute('id')
                 answer_text = FOCUS_ELEMENT.find_element(By.XPATH, ".//label[@for='" + button_id_text + "']").text
-                print(button_id_text, answer_text)
+                print("ANSWER ITEM:", button_id_text, "ANSWER TEXT:", answer_text)
                 print("RESPONSE:", response)
 
                 # checkboxes should rely on dictionary indexing only
