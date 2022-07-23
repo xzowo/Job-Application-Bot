@@ -41,7 +41,7 @@ def derive_input_type(item):
                         focus_element = item.find_element(By.XPATH, ".//input[starts-with(@id, 'input-')]")
                         if focus_element.get_attribute('type') == "date":
                             THE_TYPE = "DATE"
-                        elif focus_element.get_attribute('type') == "text" or focus_element.get_attribute('type') == "number" or focus_element.get_attribute('type') == "tel":
+                        elif focus_element.get_attribute('type') == "text" or focus_element.get_attribute('type') == "number" or focus_element.get_attribute('type') == "tel": 
                             THE_TYPE = "TEXT"
                         else:
                             raise Exception("error finding text, number, or date")
@@ -103,9 +103,9 @@ def resolve_input(driver, item, response):
     INPUT_TYPE = derived[2]
 
     try:
-        question_text = item.find_element(By.XPATH, ".//label[starts-with(@for, 'input-q')]").text
+        question_text = item.find_element(By.XPATH, ".//span[starts-with(@class, 'fs-unmask')]").text
 
-        print(question_text, "resovle_input given RESPONSE:", response)
+        print("question_text:", question_text, "resovle_input given RESPONSE:", response)
 
         if INPUT_TYPE == "RADIO":
             clicked_a_button = False
@@ -135,10 +135,6 @@ def resolve_input(driver, item, response):
                         clicked_a_button = True
                         break
                     else:
-                        if "disability" in process_label_text(question_text).lower() and "Yes" in answer_text:
-                            continue
-                        if "veteran" in process_label_text(question_text).lower() and "Yes" in answer_text:
-                            continue
 
                         processed_text = process_label_text(answer_text)
                         processed_text_list = processed_text.lower().split()
@@ -154,13 +150,6 @@ def resolve_input(driver, item, response):
                     # button does not contain text, but only the id
                     button_id_text = button.get_attribute('id')
                     answer_text = FOCUS_ELEMENT.find_element(By.XPATH, ".//label[@for='" + button_id_text + "']").text
-
-                    if "Do you have experience in " in question_text and "Yes" in answer_text:
-                        driver.execute_script("arguments[0].click();", button)
-                        clicked_a_button = True
-                    elif " degree?" in question_text and "Yes" in answer_text:
-                        driver.execute_script("arguments[0].click();", button)
-                        clicked_a_button = True
 
                 if not clicked_a_button:
                     driver.execute_script("arguments[0].click();", BUTTON_GROUP[0])
