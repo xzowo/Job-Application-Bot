@@ -1,0 +1,2 @@
+python open_offsite_links.py
+pause
